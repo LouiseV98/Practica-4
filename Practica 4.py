@@ -1,5 +1,7 @@
 import time
 
+lista_Procesos = []
+
 def algoritmo_Prioridades(lista_Procesos):
     print("\nPrioridades\n")
     tiempo_Total = 0
@@ -100,6 +102,7 @@ while True:
     print("2. SJF")
     print("3. FIFO")
     print("4. Prioridades")
+    print("5. Agregar proceso")
     print("0. Salir")
 
     opcion = int(input("Ingrese una opcion: "))
@@ -116,6 +119,29 @@ while True:
     elif opcion == 4:
         proceso_Prioridades = cargar_Procesos_Desde_Archivo(archivo_Procesos)
         algoritmo_prioridades = algoritmo_Prioridades(proceso_Prioridades)
+    elif opcion == 5:
+        # Lógica para agregar un nuevo proceso desde el usuario
+        nombre = input("Ingrese el nombre del proceso: ")
+        tiempo = int(input("Ingrese el tiempo de duración: "))
+        prioridad = int(input("Ingrese la prioridad: "))
+        posicion = input("¿Desea agregar al principio o al final? (P/A): ").strip().lower()
+
+        nuevo_proceso = (nombre, tiempo, prioridad)
+
+        # Cargar procesos existentes desde el archivo
+        lista_Procesos = cargar_Procesos_Desde_Archivo(archivo_Procesos)
+
+        if posicion == "p":
+            # Agregar el nuevo proceso al principio de la lista global
+            lista_Procesos.insert(0, nuevo_proceso)
+        else:
+            # Agregar el nuevo proceso al final de la lista global
+            lista_Procesos.append(nuevo_proceso)
+
+        # Sobrescribir el archivo con la lista actualizada de procesos
+        with open(archivo_Procesos, "w") as archivo:
+            for proceso in lista_Procesos:
+                archivo.write(f"{proceso[0]}, {proceso[1]}, {proceso[2]}\n")
     elif opcion == 0:
         break
     else:
