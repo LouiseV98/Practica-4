@@ -1,3 +1,7 @@
+Persona4Golden, 5, 2
+Persona5Royal, 7, 6
+Kaboard, 5, 7
+Spotify, 11, 5
 PlayStation, 6, 5
 JAJA, 5, 3
 XboxGame, 4, 2
@@ -12,3 +16,5 @@ System, 8, 4
 Wininit, 1, 1
 smss, 2, 3
 Lawea, 4, 2
+Keyboard, 7, 2
+Kaborad, 3, 5

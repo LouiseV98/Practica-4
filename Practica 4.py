@@ -93,6 +93,26 @@ def cargar_Procesos_Desde_Archivo(nombre_archivo):
             procesos.append((nombre, int(tiempo_Ejecucion), int(prioridad)))    #Guarda en una variable el proceso listo
     return procesos
 
+def agregar_Nuevo_Proceso(lista_Procesos):
+    #Variables para definir el proceso y colocarlo
+    nombre = input("Ingrese el nombre del proceso: ")
+    tiempo = int(input("Ingrese el tiempo de duración: "))
+    prioridad = int(input("Ingrese la prioridad: "))
+    posicion = input("¿Desea agregar al principio o al final? (P/A): ").strip().lower()
+
+    nuevo_proceso = (nombre, tiempo, prioridad) #El proceso agregado se guarda en la variable
+
+    lista_Procesos = cargar_Procesos_Desde_Archivo(archivo_Procesos)    #Cargar procesos existentes desde el archivo
+
+    if posicion.lower() == "p":
+        lista_Procesos.insert(0, nuevo_proceso) #Agregar el nuevo proceso al principio de la lista global
+    else:
+        lista_Procesos.append(nuevo_proceso)    #Agregar el nuevo proceso al final de la lista global
+
+    with open(archivo_Procesos, "w") as archivo:    #Sobrescribir el archivo con la lista actualizada de procesos
+        for proceso in lista_Procesos:
+            archivo.write(f"{proceso[0]}, {proceso[1]}, {proceso[2]}\n")
+
 archivo_Procesos = "procesos.txt"  #Nombre del archivo de procesos
 quantum = 3 #Quantum para el algoritmo RR
 
@@ -120,45 +140,9 @@ while True:
         proceso_Prioridades = cargar_Procesos_Desde_Archivo(archivo_Procesos)
         algoritmo_prioridades = algoritmo_Prioridades(proceso_Prioridades)
     elif opcion == 5:
-        # Lógica para agregar un nuevo proceso desde el usuario
-        nombre = input("Ingrese el nombre del proceso: ")
-        tiempo = int(input("Ingrese el tiempo de duración: "))
-        prioridad = int(input("Ingrese la prioridad: "))
-        posicion = input("¿Desea agregar al principio o al final? (P/A): ").strip().lower()
-
-        nuevo_proceso = (nombre, tiempo, prioridad)
-
-        # Cargar procesos existentes desde el archivo
-        lista_Procesos = cargar_Procesos_Desde_Archivo(archivo_Procesos)
-
-        if posicion == "p":
-            # Agregar el nuevo proceso al principio de la lista global
-            lista_Procesos.insert(0, nuevo_proceso)
-        else:
-            # Agregar el nuevo proceso al final de la lista global
-            lista_Procesos.append(nuevo_proceso)
-
-        # Sobrescribir el archivo con la lista actualizada de procesos
-        with open(archivo_Procesos, "w") as archivo:
-            for proceso in lista_Procesos:
-                archivo.write(f"{proceso[0]}, {proceso[1]}, {proceso[2]}\n")
+        nuevo_Proceso = agregar_Nuevo_Proceso(archivo_Procesos)
     elif opcion == 0:
         break
     else:
         print("Opcion inválida, inténtalo de nuevo")
 
-
-#archivo_Procesos = "procesos.txt"  #Nombre del archivo de procesos
-#quantum = 3 #Quantum para el algoritmo RR
-    
-#Variables para cargar los procesos 
-#proceso_RR = cargar_Procesos_Desde_Archivo(archivo_Procesos)
-#proceso_SJF = cargar_Procesos_Desde_Archivo(archivo_Procesos)
-#proceso_FIFO = cargar_Procesos_Desde_Archivo(archivo_Procesos)
-#proceso_Prioridades = cargar_Procesos_Desde_Archivo(archivo_Procesos)
-
-#Variables para mostrar los algoritmos
-#algoritmo_rr = round_robin(proceso_RR, quantum)
-#algoritmo_sfj = algoritmo_SJF(proceso_SJF)
-#algoritmo_fifo = algoritmo_FIFO(proceso_FIFO)
-#algoritmo_prioridades = algoritmo_Prioridades(proceso_Prioridades)
